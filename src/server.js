@@ -1,5 +1,6 @@
 const Hapi = require('hapi');
 require('hapi-bluebird');
+const DbConnector = require('./dbConnector.js');
 const Handlers = require('./handlers.js');
 const KontaktMQTT = require('./kontaktMQTT.js');
 const routes = require('./routes.js');
@@ -32,6 +33,7 @@ server.route(routes(handlers));
 server.start().then(() => {
     console.log('Server started at', server.info.uri);
     const kontaktMQTT = new KontaktMQTT();
+    const dbConnector = new DbConnector(kontaktMQTT);
 }).catch((err) => {
     console.log(JSON.stringify(err, null, 2));
 });

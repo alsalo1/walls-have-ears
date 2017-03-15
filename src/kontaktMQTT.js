@@ -9,6 +9,8 @@ function kontaktMQTT() {
         password: process.env.KONTAKT_IO_API_KEY
     };
 
+    let msgCb = null;
+
     const client = MQTT.connect(options);
 
     client.on('connect', () => {
@@ -17,14 +19,36 @@ function kontaktMQTT() {
     });
 
     client.on('message', (topic, msg) => {
-        console.log('topic', topic);
         msgObj = JSON.parse(msg.toString());
-        console.log('msgObj', JSON.stringify(msgObj, null, 2));
+
+        let filteredObj = msgObj.filter((el) => {
+            return (el.proximity === 'IMMEDIATE' || el.proximity === 'NEAR');
+        });
+
+        if(msgCb != null) {
+            msgCb(filteredObj);
+        }
+
+        filteredObj = filteredObj.filter((el) => {
+            return (el.trackingId === 'xb8g' || el.trackingId === 'SEjA' || el.trackingId === 'fb:ed:84:b3:47:93');
+        });
+
+        if(filteredObj.length > 0) {
+            console.log('filteredObj', JSON.stringify(filteredObj, null, 2));
+        }
     });
 
     client.on('error', (err) => {
         console.error('ERROR', err);
     });
+
+    function setMsgCb(cb) {
+        msgCb = cb;
+    }
+
+    return {
+        setMsgCb
+    };
 }
 
 module.exports = kontaktMQTT;
