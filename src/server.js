@@ -8,7 +8,7 @@ const server   = new Hapi.Server();
 
 server.connection({
     address: '0.0.0.0',
-    port: 8001
+    port: 80
 });
 
 server.route(routes(handlers));
