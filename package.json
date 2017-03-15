@@ -10,5 +10,8 @@
         "bluebird": "^3.5.0",
         "hapi": "^16.1.0",
         "hapi-bluebird": "^2.0.0"
+    },
+    "engines": {
+        "node": ">=4.0.0"
     }
 }
