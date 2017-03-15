@@ -9,6 +9,7 @@ const server   = new Hapi.Server();
 
 function checkEnv() {
     const requiredVars = [
+        'COGNITIVE_SUBSCRIPTION_ID',
         'KONTAKT_IO_API_KEY'
     ]
 

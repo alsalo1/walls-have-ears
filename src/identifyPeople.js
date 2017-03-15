@@ -2,7 +2,7 @@ const request = require('request-promise');
 const Promise = require('bluebird');
 
 const GROUP_ID = 'hackathon';
-const SUBSCRIPTION_ID = 'cb09f1c28eed41389b17cef6fa493af0';
+const SUBSCRIPTION_ID = process.env.COGNITIVE_SUBSCRIPTION_ID;
 
 var Identify = {};
 
@@ -40,8 +40,8 @@ function identifyFaces(faces) {
         uri: 'https://westus.api.cognitive.microsoft.com/face/v1.0/identify',
         headers: {
             'Ocp-Apim-Subscription-Key': SUBSCRIPTION_ID
-        },   
-        body: {    
+        },
+        body: {
             "personGroupId": GROUP_ID,
             "faceIds": ids,
             "maxNumOfCandidatesReturned":1,
@@ -69,7 +69,7 @@ function getName(personId) {
         uri: 'https://westus.api.cognitive.microsoft.com/face/v1.0/persongroups/' + GROUP_ID + '/persons/' + personId,
         headers: {
             'Ocp-Apim-Subscription-Key': SUBSCRIPTION_ID
-        },   
+        },
         json: true // Automatically parses the JSON string in the response
     };
 
