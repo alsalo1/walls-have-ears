@@ -1,3 +1,4 @@
+console.log('server.js');
 const Hapi = require('hapi');
 require('hapi-bluebird');
 const Handlers = require('./handlers.js');
