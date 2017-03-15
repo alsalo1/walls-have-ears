@@ -23,7 +23,7 @@ function kontaktMQTT() {
     });
 
     client.on('error', (err) => {
-        console.log('ERROR', JSON.stringify(err, null, 2))
+        console.error('ERROR', err);
     });
 }
 

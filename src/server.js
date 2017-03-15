@@ -1,4 +1,3 @@
-console.log('server.js');
 const Hapi = require('hapi');
 require('hapi-bluebird');
 const Handlers = require('./handlers.js');
@@ -7,6 +6,20 @@ const routes = require('./routes.js');
 
 const handlers = new Handlers();
 const server   = new Hapi.Server();
+
+function checkEnv() {
+    const requiredVars = [
+        'KONTAKT_IO_API_KEY'
+    ]
+
+    requiredVars.forEach(key => {
+        if (process.env[key] === undefined) {
+            throw new Error(`Environment variable "${key}" must be defined.`);
+        }
+    });
+}
+
+checkEnv();
 
 server.connection({
     address: '0.0.0.0',
