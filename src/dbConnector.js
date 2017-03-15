@@ -16,17 +16,17 @@ function dbConnector(kontaktMQTT) {
             let query;
 
             if(el.trackingId.length < 17) {
-                query = 'CALL addTagIdToStream(?, ?, 10); SELECT @userName, @occurences';
+                query = 'CALL addTagIdToStream(?, ?, 20)';
             } else {
-                query = 'CALL addMacIdToStream(?, ?, 10); SELECT @userName, @occurences';
+                query = 'CALL addMacIdToStream(?, ?, 20)';
             }
 
             dbConnection.query(query, [el.sourceId, el.trackingId], (err, rows) => {
                 if(err) {
                     console.log('DB error', err.stack);
                 } else {
-                    if(rows[2][0]['@userName'] != null) {
-                        console.log(rows[2][0]);
+                    if(rows[0][0].userName != null) {
+                        console.log(rows[0][0]);
                     }
                 }
             });
