@@ -1,6 +1,6 @@
 {
     "name": "walls-have-ears",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Suspects everyone and everything",
     "main": "src/server.js",
     "scripts": {
@@ -12,8 +12,11 @@
         "hapi-bluebird": "^2.0.0",
         "mqtt": "^2.4.0",
         "mysql": "^2.13.0",
-        "request-promise" : "^4.0.0",
-        "request" : "^2.3.4"
+        "nes": "^6.4.0",
+        "pug": "^2.0.0-beta11",
+        "request": "^2.3.4",
+        "request-promise": "^4.0.0",
+        "vision": "^4.1.1"
     },
     "engines": {
         "node": ">=6.0.0"

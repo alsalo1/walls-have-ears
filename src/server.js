@@ -30,12 +30,19 @@ server.connection({
     port: process.env.PORT || 8000
 });
 
-server.route(routes(handlers));
-
-server.start().then(() => {
+server.register(require('vision'))
+.then(() => {
+    server.views(require('./views'));
+    server.route(routes(handlers));
+})
+.then(() => {
+    return server.start();
+})
+.then(() => {
     console.log('Server started at', server.info.uri);
     const kontaktMQTT = new KontaktMQTT();
     const dbConnector = new DbConnector(kontaktMQTT);
-}).catch((err) => {
-    console.log(JSON.stringify(err, null, 2));
+})
+.catch((err) => {
+    console.error(JSON.stringify(err, null, 2), err);
 });

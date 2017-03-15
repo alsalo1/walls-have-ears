@@ -2,6 +2,14 @@ const pkg = require('../package.json');
 const Identify = require('./identifyPeople.js');
 
 function handlers() {
+    function index(req, reply) {
+        reply.view('index', {
+            users: [
+                'hello'
+            ]
+        });
+    }
+
     function version(req, reply) {
         reply({version: pkg.version}).code(200);
     }
@@ -18,6 +26,7 @@ function handlers() {
     }
 
     return {
+        index,
         version,
         identifyPeople
     };
