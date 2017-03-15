@@ -10,7 +10,7 @@ const server   = new Hapi.Server();
 
 server.connection({
     address: '0.0.0.0',
-    port: 80
+    port: process.env.PORT || 8000
 });
 
 server.route(routes(handlers));
