@@ -1,8 +1,14 @@
 function routes(handlers) {
-    const routeArr = [{
+    const routeArr = [
+    {
         method: 'GET',
         path: '/version',
         handler: handlers.version
+    },
+    {
+        method: 'GET',
+        path: '/identify',
+        handler: handlers.identifyPeople
     }];
 
     return routeArr;
