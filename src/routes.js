@@ -2,6 +2,11 @@ function routes(handlers) {
     const routeArr = [
     {
         method: 'GET',
+        path: '/js/{file*}',
+        handler: handlers.js
+    },
+    {
+        method: 'GET',
         path: '/',
         handler: handlers.index
     },

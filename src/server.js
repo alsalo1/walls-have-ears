@@ -33,6 +33,9 @@ server.connection({
 
 server.register(require('vision'))
 .then(() => {
+    return server.register(require('inert'));
+})
+.then(() => {
     server.views(require('./views'));
     server.route(routes(handlers));
 })

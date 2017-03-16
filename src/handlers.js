@@ -10,6 +10,12 @@ function handlers() {
         });
     }
 
+    const js = {
+        directory: {
+            path: 'client-js'
+        }
+    };
+
     function version(req, reply) {
         reply({version: pkg.version}).code(200);
     }
@@ -32,6 +38,7 @@ function handlers() {
 
     return {
         index,
+        js,
         version,
         identifyPeople
     };
