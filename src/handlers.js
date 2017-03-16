@@ -8,13 +8,13 @@ function handlers() {
 
     const img = {
         directory: {
-            path: '../img'
+            path: `${__dirname}/../img`
         }
     };
 
     const js = {
         directory: {
-            path: 'client-js'
+            path: `${__dirname}/client-js`
         }
     };
 
