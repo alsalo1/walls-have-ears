@@ -2,12 +2,16 @@ doctype html
 html
     head
         title Walls Have Ears
+        link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
     body
-        b Users
-        each item in users
-            li= item
-        hr
-        b Connected Building & City Room
+        div(class='container')
+            h1 Walls Have Ears
+            h2 Users
+            ul
+                each item in users
+                    li= item
+            hr
+            h3 Connected Building & City Room
         p
             canvas(id='roomCanvas' height=500 width=1000)
         script(id='script' type="text/javascript" src="js/roomCanvas.js")
