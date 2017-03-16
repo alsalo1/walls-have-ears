@@ -1,3 +1,5 @@
+var nes = require('nes');
+
 var loaded = {
     img: false,
     script: false,
