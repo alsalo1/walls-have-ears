@@ -22,11 +22,11 @@ function handlers() {
         let imageUrl = req.payload.url;
         Identify.findFace(imageUrl)
         .then((names) => {
-            reply({"Identification results: " : JSON.stringify(names)}).code(200);
+            reply({"identities" : names}).code(200);
         })
         .catch((err) => {
             console.log(JSON.stringify(err, null, 2));
-            reply({"Identification results" : []}).code(500);
+            reply({"identities" : []}).code(500);
         });
     }
 
