@@ -6,6 +6,8 @@ html
         b Users
         each item in users
             li= item
+        hr
         b Connected Building & City Room
-        div(id='roomCanvas')
-        script(type="text/javascript" src="js/roomCanvas.js")
+        p
+            canvas(id='roomCanvas' height=500 width=1000)
+        script(id='script' type="text/javascript" src="js/roomCanvas.js")
