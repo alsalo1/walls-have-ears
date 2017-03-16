@@ -10,6 +10,12 @@ function handlers() {
         });
     }
 
+    const img = {
+        directory: {
+            path: '../img'
+        }
+    };
+
     const js = {
         directory: {
             path: 'client-js'
@@ -38,6 +44,7 @@ function handlers() {
 
     return {
         index,
+        img,
         js,
         version,
         identifyPeople

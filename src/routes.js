@@ -2,6 +2,11 @@ function routes(handlers) {
     const routeArr = [
     {
         method: 'GET',
+        path: '/img/{file*}',
+        handler: handlers.img
+    },
+    {
+        method: 'GET',
         path: '/js/{file*}',
         handler: handlers.js
     },
