@@ -1,12 +1,14 @@
 const request = require('request-promise');
+const req= require('request');
 const Promise = require('bluebird');
+const fs = require('fs');
 
 const GROUP_ID = 'hackathon';
 const SUBSCRIPTION_ID = process.env.COGNITIVE_SUBSCRIPTION_ID;
 
 var Identify = {};
 
-function detectFaces(stream) {
+function detectFaces(url) {
     console.log("detect faces");
     var options = {
         method: 'POST',
@@ -23,8 +25,20 @@ function detectFaces(stream) {
         json: true // Automatically parses the JSON string in the response
     };
 
-    return stream.pipe(request.post(options));
+    return new Promise(function(resolve) {
+        console.log("open read stream")
+        var stream = req.get(url).pipe(fs.createWriteStream('image.jpg'));
+        stream.on('finish', function () {
+            console.log("open write stream")
+            fs.createReadStream('image.jpg').pipe(req.post(options, function (error, response, body) {
+                console.log("response")
+                resolve(body);
+            }));
+        });
+    });
 }
+
+
 
 function identifyFaces(faces) {
     console.log("identify faces");
@@ -32,6 +46,13 @@ function identifyFaces(faces) {
     faces.forEach(function(face) {
         ids.push(face.faceId);
     });
+
+    if (ids.length == 0) {
+        console.log("no faces found");
+        return [];
+    } else {
+        console.log(ids);
+    }
 
     var options = {
         method: 'POST',

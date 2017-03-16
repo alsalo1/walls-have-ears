@@ -23,13 +23,7 @@ function routes(handlers) {
     {
         method: 'POST',
         path: '/identify',
-        config: {
-            payload: {
-                output: 'stream',
-                parse: true
-            },
-            handler: handlers.identifyPeople
-        }
+        handler: handlers.identifyPeople
     }];
 
     return routeArr;

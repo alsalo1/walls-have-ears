@@ -1,5 +1,6 @@
 const pkg = require('../package.json');
 const Identify = require('./identifyPeople.js');
+const request = require('request-promise');
 
 function handlers() {
     function index(req, reply) {
@@ -23,11 +24,11 @@ function handlers() {
     }
 
     function identifyPeople(req, reply) {
-        if (!req.payload) {
-            reply("Expected image file").code(400);
+        if (!req.payload && !req.payload.url) {
+            reply("Expected 'url' paramater").code(400);
             return;
         }
-        Identify.findFace(req.payload)
+        Identify.findFace(req.payload.url)
         .then((names) => {
             reply({"identities" : names}).code(200);
         })
