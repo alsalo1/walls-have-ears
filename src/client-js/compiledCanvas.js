@@ -728,7 +728,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],2:[function(require,module,exports){
-var nes = require('nes');
+var Nes = require('nes');
 
 var loaded = {
     img: false,
@@ -769,20 +769,23 @@ function makeSocket() {
     var socket;
     try {
         var location = window.location;
-        socket = new WebSocket(`ws://${location.host}${location.pathname}`);
+        socket = new Nes.Client(`ws://${location.host}${location.pathname}`);
     } catch (e) {
         console.error(e);
         return;
     }
 
-    socket.onOpen = () => {
+    socket.connect(err => {
+        if (err) {
+            console.log(err);
+            return makeSocket();
+        }
+
         loaded.websocket = socket;
-    };
+        getImg();
+    });
 
-    socket.onmessage = handleUpdate;
-
-    socket.onerror = makeSocket;
-    socket.onclose = makeSocket;
+    socket.onupdate = handleUpdate;
 }
 
 function handleUpdate(update) {
