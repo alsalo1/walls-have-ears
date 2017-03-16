@@ -15,7 +15,12 @@ function handlers() {
     }
 
     function identifyPeople(req, reply) {
-        new Identify.findFace("https://www.linkedin.com/mpr/mpr/p/1/000/101/306/13ae4eb.jpg")
+        if (!req.payload || !req.payload.url) {
+            reply("Expected 'url' parameter").code(400);
+            return;
+        }
+        let imageUrl = req.payload.url;
+        Identify.findFace(imageUrl)
         .then((names) => {
             reply({"Identification results: " : JSON.stringify(names)}).code(200);
         })

@@ -11,7 +11,7 @@ function routes(handlers) {
         handler: handlers.version
     },
     {
-        method: 'GET',
+        method: 'POST',
         path: '/identify',
         handler: handlers.identifyPeople
     }];
