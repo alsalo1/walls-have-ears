@@ -1,21 +1,24 @@
 var loaded = {
     img: false,
-    script: false
+    script: false,
+    websocket: false
 }
 
 function ready() {
-    return loaded.img && loaded.script;
+    return loaded.img && loaded.script && loaded.websocket;
 }
 
 function setup() {
     window.onload = () => {
         getImg();
     }
-    createContent();
-}
 
-function createContent() {
-    loaded.script = document.getElementById('script');
+    try {
+        loaded.script = document.getElementById('script');
+    } catch (e) {
+        console.error(e);
+        return;
+    }
 
     loaded.script.onload = () => {
         getImg();
@@ -24,6 +27,33 @@ function createContent() {
     loaded.script.onreadystatechange = () => {
         getImg();
     };
+
+    makeSocket();
+}
+
+function makeSocket() {
+    loaded.websocket = false;
+
+    var socket;
+    try {
+        socket = new WebSocket(`ws://${window.location}`);
+    } catch (e) {
+        console.error(e);
+        return;
+    }
+
+    socket.onOpen = () => {
+        loaded.websocket = socket;
+    };
+
+    socket.onmessage = handleUpdate;
+
+    socket.onerror = makeSocket;
+    socket.onclose = makeSocket;
+}
+
+function handleUpdate(update) {
+    console.log(`update: ${update}`);
 }
 
 function paint() {
