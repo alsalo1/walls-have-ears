@@ -736,19 +736,8 @@ var loaded = {
     websocket: false
 }
 
-    /*
-    {
-            user: data.user,
-            location: {
-                x: loc.x,
-                y: loc.y,
-                radius: pixels
-            },
-            isOK: data.isOK
-        }
-    */
 var state = {
-    'test': {
+/*    'test': {
         user: 'test',
         location: {
             x: 20,
@@ -756,7 +745,7 @@ var state = {
             radius: 9
         },
         isOK: true
-    }
+    }*/
 };
 
 function ready() {
@@ -847,7 +836,7 @@ function paint() {
     Object.keys(state).forEach(key => {
         var update = state[key];
         console.log(`${JSON.stringify(update)}`);
-        ctx.fillStyle = update.isOK ? 'green' : 'red';
+        ctx.fillStyle = update.isOK ? 'rgba(0, 255, 0, 0.3)' : 'rgba(255, 0, 0, 0.3)';
 
         ctx.beginPath();
         ctx.arc(update.location.x, update.location.y, update.location.radius, 0, Math.PI*2, false);
