@@ -6,7 +6,7 @@ const SUBSCRIPTION_ID = process.env.COGNITIVE_SUBSCRIPTION_ID;
 
 var Identify = {};
 
-function detectFaces(url) {
+function detectFaces(stream) {
     console.log("detect faces");
     var options = {
         method: 'POST',
@@ -17,15 +17,13 @@ function detectFaces(url) {
 
         },
         headers: {
-            'Ocp-Apim-Subscription-Key': SUBSCRIPTION_ID
-        },
-        body: {
-            url: url
+            'Ocp-Apim-Subscription-Key': SUBSCRIPTION_ID,
+            'Content-Type' : "application/octet-stream"
         },
         json: true // Automatically parses the JSON string in the response
     };
 
-    return request(options);
+    return stream.pipe(request.post(options));
 }
 
 function identifyFaces(faces) {
@@ -78,8 +76,8 @@ function getName(personId) {
     });
 }
 
-Identify.findFace = function(url) {
-    return detectFaces(url)
+Identify.findFace = function(image) {
+    return detectFaces(image)
      .then(identifyFaces)
      .then(findNames);
 }

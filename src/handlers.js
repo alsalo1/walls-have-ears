@@ -27,12 +27,11 @@ function handlers() {
     }
 
     function identifyPeople(req, reply) {
-        if (!req.payload || !req.payload.url) {
-            reply("Expected 'url' parameter").code(400);
+        if (!req.payload) {
+            reply("Expected image file").code(400);
             return;
         }
-        let imageUrl = req.payload.url;
-        Identify.findFace(imageUrl)
+        Identify.findFace(req.payload)
         .then((names) => {
             reply({"identities" : names}).code(200);
         })
