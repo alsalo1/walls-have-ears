@@ -4,6 +4,7 @@ const DbConnector = require('./dbConnector.js');
 const Handlers = require('./handlers.js');
 const KontaktMQTT = require('./kontaktMQTT.js');
 const routes = require('./routes.js');
+const SuspicionHandler = require('./suspicionHandler.js');
 
 const handlers = new Handlers();
 const server   = new Hapi.Server();
@@ -41,8 +42,8 @@ server.register(require('vision'))
 .then(() => {
     console.log('Server started at', server.info.uri);
     const kontaktMQTT = new KontaktMQTT();
-    const dbConnector = new DbConnector(kontaktMQTT);
-})
-.catch((err) => {
+    const suspicionHandler = new SuspicionHandler();
+    const dbConnector = new DbConnector(kontaktMQTT, suspicionHandler);
+}).catch((err) => {
     console.error(JSON.stringify(err, null, 2), err);
 });
