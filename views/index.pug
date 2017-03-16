@@ -6,12 +6,9 @@ html
     body
         div(class='container')
             h1 Walls Have Ears
-            h2 Users
-            ul
-                each item in users
-                    li= item
             hr
             h3 Connected Building & City Room
-        p
-            canvas(id='roomCanvas' height=500 width=1000)
+            p
+                canvas(id='roomCanvas' height=500 width=1000)
+            hr
         script(id='script' type="text/javascript" src="js/roomCanvas.js")

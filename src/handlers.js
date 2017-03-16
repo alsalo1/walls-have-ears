@@ -3,11 +3,7 @@ const Identify = require('./identifyPeople.js');
 
 function handlers() {
     function index(req, reply) {
-        reply.view('index', {
-            users: [
-                'hello'
-            ]
-        });
+        reply.view('index');
     }
 
     const img = {
