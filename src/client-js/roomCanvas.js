@@ -36,7 +36,8 @@ function makeSocket() {
 
     var socket;
     try {
-        socket = new WebSocket(`ws://${window.location}`);
+        var location = window.location;
+        socket = new WebSocket(`ws://${location.host}${location.pathname}`);
     } catch (e) {
         console.error(e);
         return;
