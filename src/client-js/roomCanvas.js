@@ -14,7 +14,8 @@ var state = {
             y: 40,
             radius: 9
         },
-        isOK: true
+        isOK: true,
+        age: 0
     }*/
 };
 
@@ -82,6 +83,7 @@ function makeSocket() {
 function handleUpdate(update) {
     console.log(`update`);
     if (update.user) {
+        update.age = 0;
         state[update.user] = update;
     }
 
@@ -105,8 +107,10 @@ function paint() {
 
     Object.keys(state).forEach(key => {
         var update = state[key];
+        var age = update.age ? update.age : 1;
+        var alpha = 0.3/age;
         console.log(`${JSON.stringify(update)}`);
-        ctx.fillStyle = update.isOK ? 'rgba(0, 255, 0, 0.3)' : 'rgba(255, 0, 0, 0.3)';
+        ctx.fillStyle = update.isOK ? `rgba(0, 255, 0, ${alpha})` : `rgba(255, 0, 0, ${alpha})`;
 
         ctx.beginPath();
         ctx.arc(update.location.x, update.location.y, update.location.radius, 0, Math.PI*2, false);
@@ -116,6 +120,19 @@ function paint() {
         console.log(`${key} drawn`);
     });
 }
+
+function age() {
+    Object.keys(state).forEach(key => {
+        var update = state[key];
+        update.age = update.age + 1;
+    });
+
+    paint();
+
+    setTimeout(age, 2000);
+}
+
+age();
 
 function getImg() {
     if (!loaded.img) {
