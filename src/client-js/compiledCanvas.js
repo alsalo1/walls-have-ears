@@ -736,6 +736,29 @@ var loaded = {
     websocket: false
 }
 
+    /*
+    {
+            user: data.user,
+            location: {
+                x: loc.x,
+                y: loc.y,
+                radius: pixels
+            },
+            isOK: data.isOK
+        }
+    */
+var state = {
+    'test': {
+        user: 'test',
+        location: {
+            x: 20,
+            y: 40,
+            radius: 9
+        },
+        isOK: true
+    }
+};
+
 function ready() {
     return loaded.img && loaded.script && loaded.websocket;
 }
@@ -782,14 +805,28 @@ function makeSocket() {
         }
 
         loaded.websocket = socket;
+
+        socket.onUpdate = handleUpdate;
+        socket.onError = e => {
+            console.error(e);
+            makeSocket();
+        }
+        socket.onDisconnect = () => {
+            console.log('disconnect');
+            makeSocket();
+        }
+
         getImg();
     });
-
-    socket.onupdate = handleUpdate;
 }
 
 function handleUpdate(update) {
-    console.log(`update: ${update}`);
+    console.log(`update`);
+    if (update.user) {
+        state[update.user] = update;
+    }
+
+    paint();
 }
 
 function paint() {
@@ -802,8 +839,23 @@ function paint() {
     canvas.width = img.width;
     canvas.height = img.height;
 
+    console.log(`${canvas.width}, ${canvas.height}`);
+
     var ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0,0);
+
+    Object.keys(state).forEach(key => {
+        var update = state[key];
+        console.log(`${JSON.stringify(update)}`);
+        ctx.fillStyle = update.isOK ? 'green' : 'red';
+
+        ctx.beginPath();
+        ctx.arc(update.location.x, update.location.y, update.location.radius, 0, Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+        ctx.stroke();
+        console.log(`${key} drawn`);
+    });
 }
 
 function getImg() {
