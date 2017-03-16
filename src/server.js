@@ -31,10 +31,7 @@ server.connection({
     port: process.env.PORT || 8000
 });
 
-server.register(require('vision'))
-.then(() => {
-    return server.register(require('inert'));
-})
+server.register([require('vision'), require('nes'), require('inert')])
 .then(() => {
     server.views(require('./views'));
     server.route(routes(handlers));
@@ -45,7 +42,7 @@ server.register(require('vision'))
 .then(() => {
     console.log('Server started at', server.info.uri);
     const kontaktMQTT = new KontaktMQTT();
-    const suspicionHandler = new SuspicionHandler();
+    const suspicionHandler = new SuspicionHandler(server);
     const dbConnector = new DbConnector(kontaktMQTT, suspicionHandler);
 }).catch((err) => {
     console.error(JSON.stringify(err, null, 2), err);

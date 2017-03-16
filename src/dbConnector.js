@@ -25,12 +25,13 @@ function dbConnector(kontaktMQTT, suspicionHandler) {
                 if(err) {
                     console.log('DB error', err.stack);
                 } else {
-                    if(rows[0][0].userName != null && rows[0][0].occurences == 0) {
+                    if(rows[0][0].userName != null) {
                         console.log(rows[0][0]);
                         suspicionHandler.suspicion({
                             user: rows[0][0].userName,
                             source: el.sourceId,
-                            rssi: el.rssi
+                            rssi: el.rssi,
+                            isOK: (rows[0][0].occurences > 0)
                         });
                     }
                 }
